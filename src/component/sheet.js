@@ -339,7 +339,7 @@ function paste(what, evt) {
     };
     // pastFromSystemClipboard is async operation, need to tell it how to reset sheet and trigger event after it finishes
     // pasting content from system clipboard
-    data.pasteFromSystemClipboard(resetSheet, eventTrigger);
+    data.pasteFromSystemClipboard(resetSheet, eventTrigger, what);
   } else if (data.paste(what, msg => xtoast('Tip', msg))) {
     sheetReset.call(this);
   } else if (evt) {
@@ -704,6 +704,8 @@ function sheetInitEvents() {
       cut.call(this);
     } else if (type === 'paste') {
       paste.call(this, 'all');
+    } else if (type === 'rotate-paste') {
+      paste.call(this, 'rotate-paste')
     } else if (type === 'paste-value') {
       paste.call(this, 'text');
     } else if (type === 'paste-format') {
@@ -888,7 +890,7 @@ function sheetInitEvents() {
 export default class Sheet {
   constructor(targetEl, data) {
     this.eventMap = createEventEmitter();
-    const { view, showToolbar, showContextmenu } = data.settings;
+    const { view, showToolbar, showContextmenu, menuItems } = data.settings;
     this.el = h('div', `${cssPrefix}-sheet`);
     this.toolbar = new Toolbar(data, view.width, !showToolbar);
     this.print = new Print(data);
@@ -911,7 +913,7 @@ export default class Sheet {
     // data validation
     this.modalValidation = new ModalValidation();
     // contextMenu
-    this.contextMenu = new ContextMenu(() => this.getRect(), !showContextmenu);
+    this.contextMenu = new ContextMenu(() => this.getRect(), !showContextmenu, menuItems);
     // selector
     this.selector = new Selector(data);
     this.overlayerCEl = h('div', `${cssPrefix}-overlayer-content`)

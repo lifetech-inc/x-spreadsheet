@@ -10,6 +10,7 @@ declare module 'x-data-spreadsheet' {
     showToolbar?: boolean;
     showGrid?: boolean;
     showContextmenu?: boolean;
+    menuItems: [];
     showBottomBar?: boolean;
     extendToolbar?: {
       left?: ExtendToolbarOption[],
@@ -132,13 +133,13 @@ declare module 'x-data-spreadsheet' {
       left?: string[];
     };
   }
-  export interface Editor {}
-  export interface Element {}
+  export interface Editor { }
+  export interface Element { }
 
-  export interface Row {}
-  export interface Table {}
-  export interface Cell {}
-  export interface Sheet {}
+  export interface Row { }
+  export interface Table { }
+  export interface Cell { }
+  export interface Sheet { }
 
   export default class Spreadsheet {
     constructor(container: string | HTMLElement, opts?: Options);
@@ -202,7 +203,7 @@ declare module 'x-data-spreadsheet' {
   }
   global {
     interface Window {
-      x_spreadsheet(container: string | HTMLElement, opts?: Options): Spreadsheet; 
+      x_spreadsheet(container: string | HTMLElement, opts?: Options): Spreadsheet;
     }
   }
 }
