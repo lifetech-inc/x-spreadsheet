@@ -77,6 +77,29 @@ const defaultSettings = {
   showGrid: true,
   showToolbar: true,
   showContextmenu: true,
+  menuItems: [
+    { key: 'copy', title: t('contextmenu.copy'), label: 'Ctrl+C' },
+    { key: 'cut', title: t('contextmenu.cut'), label: 'Ctrl+X' },
+    { key: 'paste', title: t('contextmenu.paste'), label: 'Ctrl+V' },
+    { key: 'paste-value', title: t('contextmenu.pasteValue'), label: 'Ctrl+Shift+V' },
+    { key: 'paste-format', title: t('contextmenu.pasteFormat'), label: 'Ctrl+Alt+V' },
+    { key: 'divider' },
+    { key: 'insert-row', title: t('contextmenu.insertRow') },
+    { key: 'insert-column', title: t('contextmenu.insertColumn') },
+    { key: 'divider' },
+    { key: 'delete-row', title: t('contextmenu.deleteRow') },
+    { key: 'delete-column', title: t('contextmenu.deleteColumn') },
+    { key: 'delete-cell-text', title: t('contextmenu.deleteCellText') },
+    { key: 'hide', title: t('contextmenu.hide') },
+    { key: 'divider' },
+    { key: 'validation', title: t('contextmenu.validation') },
+    { key: 'divider' },
+    { key: 'cell-printable', title: t('contextmenu.cellprintable') },
+    { key: 'cell-non-printable', title: t('contextmenu.cellnonprintable') },
+    { key: 'divider' },
+    { key: 'cell-editable', title: t('contextmenu.celleditable') },
+    { key: 'cell-non-editable', title: t('contextmenu.cellnoneditable') },
+  ],
   showBottomBar: true,
   row: {
     len: 100,
@@ -111,7 +134,7 @@ const bottombarHeight = 41;
 
 // src: cellRange
 // dst: cellRange
-function canPaste(src, dst, error = () => {}) {
+function canPaste(src, dst, error = () => { }) {
   const { merges } = this;
   const cellRange = dst.clone();
   const [srn, scn] = src.size();
@@ -343,7 +366,7 @@ export default class DataProxy {
     this.history = new History();
     this.clipboard = new Clipboard();
     this.autoFilter = new AutoFilter();
-    this.change = () => {};
+    this.change = () => { };
     this.exceptRowSet = new Set();
     this.sortedRowMap = new Map();
     this.unsortedRowMap = new Map();
@@ -433,7 +456,7 @@ export default class DataProxy {
     // this need https protocol
     /* global navigator */
     if (navigator.clipboard) {
-      navigator.clipboard.writeText(copyText).then(() => {}, (err) => {
+      navigator.clipboard.writeText(copyText).then(() => { }, (err) => {
         console.log('text copy to the system clipboard error  ', copyText, err);
       });
     }
@@ -443,8 +466,8 @@ export default class DataProxy {
     this.clipboard.cut(this.selector.range);
   }
 
-  // what: all | text | format
-  paste(what = 'all', error = () => {}) {
+  // what: all | text | format | rotate-paste
+  paste(what = 'all', error = () => { }) {
     // console.log('sIndexes:', sIndexes);
     const { clipboard, selector } = this;
     if (clipboard.isClear()) return false;
@@ -460,14 +483,44 @@ export default class DataProxy {
     return true;
   }
 
-  pasteFromSystemClipboard(resetSheet, eventTrigger) {
+  pasteFromSystemClipboard(resetSheet, eventTrigger, what) {
+    // whatが"all"であれば、pasteとキー名を揃える(pasteのみwhatがキー名と合わない為)
+    if (what === "all") {
+      what = "paste"
+    }
     const { selector } = this;
     navigator.clipboard.readText().then((content) => {
+      // 転置して貼り付け
+      if (what == "rotate-paste") {
+        let tmp = [];
+        // [[1\t 2\t 3\t 4],[5\t 6\t 7\t 8]]
+        let nContent = content.split('\n');
+        for (let tContent of nContent) {
+          // [[1,2,3,4],[5,6,7,8]]
+          let contents = tContent.split('\t');
+          for (let idx in contents) {
+            if (!tmp[idx]) {
+              tmp[idx] = contents[idx]
+            } else {
+              tmp[idx] += '\t'
+              tmp[idx] += contents[idx]
+            }
+          }
+        }
+        content = tmp.join('\n');
+      }
+
+      let exeItem = this.settings.menuItems.find(it => it.beforeRender && what === it.key)
+
       const contentToPaste = this.parseClipboardContent(content);
       let startRow = selector.ri;
       contentToPaste.forEach((row) => {
         let startColumn = selector.ci;
         row.forEach((cellContent) => {
+          // 値格納前の処理が定義されていれば、実行する
+          if (exeItem) {
+            cellContent = exeItem.beforeRender(cellContent)
+          }
           this.setCellText(startRow, startColumn, cellContent, 'input');
           startColumn += 1;
         });
@@ -508,7 +561,7 @@ export default class DataProxy {
     }
   }
 
-  autofill(cellRange, what, error = () => {}) {
+  autofill(cellRange, what, error = () => { }) {
     const srcRange = this.selector.range;
     if (!canPaste.call(this, srcRange, cellRange, error)) return false;
     this.changeData(() => {
@@ -534,9 +587,9 @@ export default class DataProxy {
     if (ri < 0) nri = rows.len - 1;
     if (ci < 0) nci = cols.len - 1;
     if (nri > cri) [sri, eri] = [cri, nri];
-    else [sri, eri] = [nri, cri];
+    else[sri, eri] = [nri, cri];
     if (nci > cci) [sci, eci] = [cci, nci];
-    else [sci, eci] = [nci, cci];
+    else[sci, eci] = [nci, cci];
     selector.range = merges.union(new CellRange(
       sri, sci, eri, eci,
     ));

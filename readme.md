@@ -63,6 +63,25 @@ s.validate()
   showToolbar: true,
   showGrid: true,
   showContextmenu: true,
+  menuItems: [
+    { key: "copy", title: "コピー", label: "Ctrl+C" },
+    { key: "cut", title: "切り取り", label: "Ctrl+X" },
+    {
+      key: "paste",
+      title: "貼り付け",
+      label: "Ctrl+V",
+      beforeRender: (val) => {
+        return val.replace(/[^0-9]/g, "");
+      },
+    },
+    {
+      key: "rotate-paste",
+      title: "転置して貼り付け",
+      beforeRender: (val) => {
+        return val.replace(/[^0-9]/g, "");
+      },
+    },
+  ],
   view: {
     height: () => document.documentElement.clientHeight,
     width: () => document.documentElement.clientWidth,
