@@ -20,7 +20,7 @@ const formatNumberRender = (v) => {
  * @returns 
  */
 const enhancedFormatNumberRender = (v, locale) => {
-  if (/^(-?\d*.?\d*)$/.test(v)) {
+  if (v && v.trim().length > 0 && isNaN(Number(v)) === false) {
     let split = v.toString().split('.');
     var numberFormatter = new Intl.NumberFormat(locale || 'ja-JP', {
       style: 'decimal'
