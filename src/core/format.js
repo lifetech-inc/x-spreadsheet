@@ -3,11 +3,29 @@ import { tf } from '../locale/locale';
 const formatStringRender = v => v;
 
 const formatNumberRender = (v) => {
-  // match "-12.1" or "12" or "12.1"
+    // match "-12.1" or "12" or "12.1"
   if (/^(-?\d*.?\d*)$/.test(v)) {
     const v1 = Number(v).toFixed(2).toString();
     const [first, ...parts] = v1.split('\\.');
     return [first.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'), ...parts];
+  }
+  return v;
+};
+
+/**
+ * 通過をフォーマットする
+ * 
+ * @param {*} v 
+ * @param {*} locales 未指定時、'ja-JP'
+ * @returns 
+ */
+const enhancedFormatNumberRender = (v, locale) => {
+  if (v && v.trim().length > 0 && isNaN(Number(v)) === false) {
+    let split = v.toString().split('.');
+    var numberFormatter = new Intl.NumberFormat(locale || 'ja-JP', {
+      style: 'decimal'
+    });
+    return `${numberFormatter.format(split[0])}${split[1] ? '.' + split[1] : ''}`;
   }
   return v;
 };
@@ -30,7 +48,7 @@ const baseFormats = [
     title: tf('format.number'),
     type: 'number',
     label: '1,000.12',
-    render: formatNumberRender,
+    render: v => enhancedFormatNumberRender(v, tf('locale')),
   },
   {
     key: 'percent',
