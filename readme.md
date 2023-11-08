@@ -181,6 +181,11 @@ Open your browser and visit http://127.0.0.1:8080.
 
 Modern browsers(chrome, firefox, Safari).
 
+
+## npm public
+npm login
+npm publish --access public
+
 ## LICENSE
 
 MIT
