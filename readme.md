@@ -11,20 +11,10 @@
 ## Document
 * T.B.D
 
-## CDN
-```html
-<link rel="stylesheet" href="https://unpkg.com/x-data-spreadsheet@1.1.5/dist/xspreadsheet.css">
-<script src="https://unpkg.com/x-data-spreadsheet@1.1.5/dist/xspreadsheet.js"></script>
-
-<script>
-   x_spreadsheet('#xspreadsheet');
-</script>
-```
-
 ## NPM
 
 ```shell
-npm install x-data-spreadsheet
+npm install @lifetech-inc/x-data-spreadsheet
 ```
 
 ```html
@@ -32,7 +22,7 @@ npm install x-data-spreadsheet
 ```
 
 ```javascript
-import Spreadsheet from "x-data-spreadsheet";
+import Spreadsheet from "@lifetech-inc/x-data-spreadsheet";
 // If you need to override the default options, you can set the override
 // const options = {};
 // new Spreadsheet('#x-spreadsheet-demo', options);
@@ -140,21 +130,11 @@ s.cellStyle(ri, ci);
 ## Internationalization
 ```javascript
 // npm 
-import Spreadsheet from 'x-data-spreadsheet';
-import zhCN from 'x-data-spreadsheet/dist/locale/zh-cn';
+import Spreadsheet from '@lifetech-inc/x-data-spreadsheet';
+import zhCN from '@lifetech-inc/x-data-spreadsheet/dist/locale/zh-cn';
 
 Spreadsheet.locale('zh-cn', zhCN);
 new Spreadsheet(document.getElementById('xss-demo'));
-```
-```html
-<!-- Import via CDN -->
-<link rel="stylesheet" href="https://unpkg.com/x-data-spreadsheet@1.1.5/dist/xspreadsheet.css">
-<script src="https://unpkg.com/x-data-spreadsheet@1.1.5/dist/xspreadsheet.js"></script>
-<script src="https://unpkg.com/x-data-spreadsheet@1.1.5/dist/locale/zh-cn.js"></script>
-
-<script>
-  x_spreadsheet.locale('zh-cn');
-</script>
 ```
 
 ## Features
