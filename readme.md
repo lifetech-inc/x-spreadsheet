@@ -1,25 +1,15 @@
 # x-spreadsheet
 
-[![npm package](https://img.shields.io/npm/v/x-data-spreadsheet.svg)](https://www.npmjs.org/package/x-data-spreadsheet)
-[![NPM downloads](http://img.shields.io/npm/dm/x-data-spreadsheet.svg)](https://npmjs.org/package/x-data-spreadsheet)
-[![NPM downloads](http://img.shields.io/npm/dt/x-data-spreadsheet.svg)](https://npmjs.org/package/x-data-spreadsheet)
-[![Build passing](https://travis-ci.org/myliang/x-spreadsheet.svg?branch=master)](https://travis-ci.org/myliang/x-spreadsheet)
-[![codecov](https://codecov.io/gh/myliang/x-spreadsheet/branch/master/graph/badge.svg)](https://codecov.io/gh/myliang/x-spreadsheet)
-![GitHub](https://img.shields.io/github/license/myliang/x-spreadsheet.svg)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/myliang/x-spreadsheet.svg)
-[![Join the chat at https://gitter.im/x-datav/spreadsheet](https://badges.gitter.im/x-datav/spreadsheet.svg)](https://gitter.im/x-datav/spreadsheet?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 > A web-based JavaScript spreadsheet
 
 <p align="center">
-  <a href="https://github.com/myliang/x-spreadsheet">
+  <a href="https://github.com/lifetech-inc/x-spreadsheet">
     <img width="100%" src="https://raw.githubusercontent.com/myliang/x-spreadsheet/master/docs/demo.png">
   </a>
 </p>
 
 ## Document
-* en
-* [zh-cn 中文](https://hondrytravis.github.io/x-spreadsheet-doc/)
+* T.B.D
 
 ## CDN
 ```html
@@ -104,6 +94,7 @@ s.validate()
     strike: false,
     underline: false,
     color: '#0a0a0a',
+    format: 'number', 
     font: {
       name: 'Helvetica',
       size: 10,
@@ -198,7 +189,7 @@ new Spreadsheet(document.getElementById('xss-demo'));
 ## Development
 
 ```sheel
-git clone https://github.com/myliang/x-spreadsheet.git
+git clone https://github.com/lifetech-inc/x-spreadsheet.git
 cd x-spreadsheet
 npm install
 npm run dev
