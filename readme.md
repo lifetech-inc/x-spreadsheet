@@ -183,8 +183,15 @@ Modern browsers(chrome, firefox, Safari).
 
 
 ## npm public
+```sheel
 npm login
 npm publish --access public
+
+// バージョンアップ
+npm version patch # v1.0.0 からv1.0.1 にアップ
+npm version minor # v1.0.1 からv1.1.0 にアップ
+npm version major # v1.0.1 からv2.0.0 にアップ
+```
 
 ## LICENSE
 
