@@ -171,11 +171,11 @@ function overlayerMousemove(evt) {
   }
 }
 
-// let scrollThreshold = 15;
+let scrollThreshold = 15;
 function overlayerMousescroll(evt) {
-  // scrollThreshold -= 1;
-  // if (scrollThreshold > 0) return;
-  // scrollThreshold = 15;
+  scrollThreshold -= 4;
+  if (scrollThreshold > 0) return;
+  scrollThreshold = 15;
 
   const { verticalScrollbar, horizontalScrollbar, data } = this;
   const { top } = verticalScrollbar.scroll();
