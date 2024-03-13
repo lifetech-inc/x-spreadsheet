@@ -70,6 +70,7 @@ s.validate()
     len: 100,
     height: 25,
   },
+  limitRowLen: 300,
   col: {
     len: 26,
     width: 100,
