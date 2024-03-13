@@ -85,6 +85,7 @@ const defaultSettings = {
     { key: 'paste-format', title: t('contextmenu.pasteFormat'), label: 'Ctrl+Alt+V' },
     { key: 'divider' },
     { key: 'insert-row', title: t('contextmenu.insertRow') },
+    { key: 'insert-rows', title: t('contextmenu.insertRows') },
     { key: 'insert-column', title: t('contextmenu.insertColumn') },
     { key: 'divider' },
     { key: 'delete-row', title: t('contextmenu.deleteRow') },

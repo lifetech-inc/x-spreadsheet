@@ -524,10 +524,14 @@ function dataSetCellText(text, state = 'finished') {
 }
 
 function insertDeleteRowColumn(type) {
-  const { data } = this;
+  const { data, selector } = this;
   if (data.settings.mode === 'read') return;
   if (type === 'insert-row') {
     data.insert('row');
+  } else if (type === 'insert-rows') {
+    // 複数行追加
+    let insertCount = selector.range.eri - selector.range.sri + 1
+    data.insert('row', insertCount);
   } else if (type === 'delete-row') {
     data.delete('row');
   } else if (type === 'insert-column') {
