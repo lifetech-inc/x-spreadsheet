@@ -105,6 +105,7 @@ const defaultSettings = {
     len: 100,
     height: 25,
   },
+  limitRowLen: 300,
   col: {
     len: 26,
     width: 100,
@@ -354,6 +355,7 @@ export default class DataProxy {
     this.styles = []; // Array<Style>
     this.merges = new Merges(); // [CellRange, ...]
     this.rows = new Rows(this.settings.row);
+    this.limitRowLen = this.settings.limitRowLen;
     this.cols = new Cols(this.settings.col);
     this.validations = new Validations();
     this.hyperlinks = {};
@@ -1162,7 +1164,7 @@ export default class DataProxy {
 
   viewRange() {
     const {
-      scroll, rows, cols, freeze, exceptRowSet,
+      scroll, rows, cols, freeze, exceptRowSet, limitRowLen
     } = this;
     // console.log('scroll:', scroll, ', freeze:', freeze)
     let { ri, ci } = scroll;
@@ -1170,6 +1172,10 @@ export default class DataProxy {
     if (ci <= 0) [, ci] = freeze;
 
     let [x, y] = [0, 0];
+    // 行の限界値を判定(インサート等で行を増やす限界値)
+    if ( rows.len > limitRowLen) {
+      rows.len = limitRowLen;
+    }
     let [eri, eci] = [rows.len, cols.len];
     for (let i = ri; i < rows.len; i += 1) {
       if (!exceptRowSet.has(i)) {
