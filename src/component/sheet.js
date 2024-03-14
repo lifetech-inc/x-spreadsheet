@@ -527,9 +527,7 @@ function insertDeleteRowColumn(type) {
   const { data, selector } = this;
   if (data.settings.mode === 'read') return;
   if (type === 'insert-row') {
-    data.insert('row');
-  } else if (type === 'insert-rows') {
-    // 複数行追加
+    // 選択している行数分だけ追加
     let insertCount = selector.range.eri - selector.range.sri + 1
     data.insert('row', insertCount);
   } else if (type === 'delete-row') {
