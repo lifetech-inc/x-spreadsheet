@@ -173,7 +173,7 @@ function overlayerMousemove(evt) {
 
 let scrollThreshold = 15;
 function overlayerMousescroll(evt) {
-  scrollThreshold -= 4;
+  scrollThreshold -= 5;
   if (scrollThreshold > 0) return;
   scrollThreshold = 15;
 
