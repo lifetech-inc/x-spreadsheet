@@ -530,8 +530,15 @@ function insertDeleteRowColumn(type) {
     // 選択している行数分だけ追加
     let insertCount = selector.range.eri - selector.range.sri + 1
     data.insert('row', insertCount);
+  } else if (type === 'insert-row-delete-end-row') {
+    // 行を追加した後、行末端を削除
+    let insertCount = selector.range.eri - selector.range.sri + 1
+    data.insert('row', insertCount, data.rows.len);
   } else if (type === 'delete-row') {
     data.delete('row');
+  } else if (type === 'delete-row-insert-end-row') {
+    // 行を削除した後、行末端に挿入
+    data.delete('row', data.rows.len);
   } else if (type === 'insert-column') {
     data.insert('column');
   } else if (type === 'delete-column') {
