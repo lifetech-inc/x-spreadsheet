@@ -63,11 +63,11 @@ s.validate();
       },
     },
     {
-      key: "insert-row",
+      key: "insert-row-delete-end-row",
       title: "選択した行数を上に挿入",
     },
     {
-      key: "delete-row",
+      key: "delete-row-insert-end-row",
       title: "選択した行数を削除",
     },
   ],
