@@ -177,6 +177,8 @@ function overlayerMousescroll(evt) {
   if (scrollThreshold > 0) return;
   scrollThreshold = 15;
 
+  evt.preventDefault();
+
   const { verticalScrollbar, horizontalScrollbar, data } = this;
   const { top } = verticalScrollbar.scroll();
   const { left } = horizontalScrollbar.scroll();
