@@ -644,6 +644,11 @@ function sheetInitEvents() {
         overlayerMousedown.call(this, evt);
       }
     })
+    .on('touchstart', (evt) => {
+      editor.clear();
+      contextMenu.hide();
+      editorSet.call(this);
+    })
     .on('mousewheel.stop', (evt) => {
       overlayerMousescroll.call(this, evt);
     })
