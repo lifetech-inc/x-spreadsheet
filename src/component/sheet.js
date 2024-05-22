@@ -627,7 +627,7 @@ function sheetInitEvents() {
         overlayerMousedown.call(this, evt);
       }
     })
-    .on('touchstart', (evt) => {
+    .on("touchstart", (evt) => {
       editor.clear();
       contextMenu.hide();
       editorSet.call(this);
@@ -1014,5 +1014,8 @@ export default class Sheet {
       left: cols.indexWidth,
       top: rows.height,
     };
+  }
+  moveSelector(selectorVal) {
+    selectorSet.call(this, false, selectorVal, 0);
   }
 }

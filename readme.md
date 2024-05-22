@@ -182,11 +182,13 @@ new Spreadsheet(document.getElementById("xss-demo"));
 - Data validations
 
 ## Development
-
+2024/05/22、tfp-im更新
 ```sheel
 git clone https://github.com/lifetech-inc/x-spreadsheet.git
 cd x-spreadsheet
+npm config set strict-ssl false
 npm install
+export NODE_OPTIONS=--openssl-legacy-provider
 npm run dev
 ```
 
