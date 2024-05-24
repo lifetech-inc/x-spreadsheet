@@ -182,7 +182,9 @@ new Spreadsheet(document.getElementById("xss-demo"));
 - Data validations
 
 ## Development
-2024/05/22、tfp-im更新
+
+2024/05/22、tfp-im 更新
+
 ```sheel
 git clone https://github.com/lifetech-inc/x-spreadsheet.git
 cd x-spreadsheet
@@ -202,12 +204,13 @@ Modern browsers(chrome, firefox, Safari).
 
 ```sheel
 npm login
-npm publish --access public
 
 // バージョンアップ
 npm version patch # v1.0.0 からv1.0.1 にアップ
 npm version minor # v1.0.1 からv1.1.0 にアップ
 npm version major # v1.0.1 からv2.0.0 にアップ
+
+npm publish --access public
 ```
 
 ## LICENSE
