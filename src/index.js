@@ -123,6 +123,11 @@ class Spreadsheet {
     return this;
   }
 
+  moveSelector(selectorVal){
+    this.sheet.moveSelector(selectorVal);
+    return this;
+  }
+
   static locale(lang, message) {
     locale(lang, message);
   }
