@@ -159,7 +159,7 @@ let scrollThreshold = 15;
 function overlayerMousescroll(evt) {
   evt.preventDefault();
 
-  scrollThreshold -= 5;
+  scrollThreshold -= 7;
   if (scrollThreshold > 0) return;
   scrollThreshold = 15;
 
