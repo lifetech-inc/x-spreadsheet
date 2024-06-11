@@ -159,7 +159,7 @@ let scrollThreshold = 15;
 function overlayerMousescroll(evt) {
   evt.preventDefault();
 
-  scrollThreshold -= 5;
+  scrollThreshold -= 7;
   if (scrollThreshold > 0) return;
   scrollThreshold = 15;
 
@@ -502,6 +502,7 @@ function dataSetCellText(text, state = "finished") {
   data.setSelectedCellText(text, state);
   const { ri, ci } = data.selector;
   if (state === "finished") {
+    this.trigger("finished", text, ri, ci);
     table.render();
   } else {
     this.trigger("cell-edited", text, ri, ci);
