@@ -1,6 +1,6 @@
 {
   "name": "@lifetech-inc/x-data-spreadsheet",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "a javascript xpreadsheet",
   "types": "src/index.d.ts",
   "main": "src/index.js",
