@@ -172,8 +172,10 @@ function copyPaste(srcCellRange, dstCellRange, what, autofill = false) {
   const { rows, merges } = this;
   // delete dest merge
   if (what === "all" || what === "format") {
-    rows.deleteCells(dstCellRange, what);
-    merges.deleteWithin(dstCellRange);
+    /* 2025/01/07 */
+    /* 以下の処理があると、コピーする前にペースト対象セルが初期化される為、コピー対象セルとペースト対象セルが被った時にバグる（以下は結合セル等に対して必要な処理に見受けられる） */
+    // rows.deleteCells(dstCellRange, what);
+    // merges.deleteWithin(dstCellRange);
   }
   rows.copyPaste(srcCellRange, dstCellRange, what, autofill, (ri, ci, cell) => {
     if (cell && cell.merge) {
