@@ -128,6 +128,9 @@ class Rows {
       if (deri < sri) dn = drn;
       else dn = dcn;
     }
+
+    const ncellList = [];
+    // ncellListを作成する為のループ
     // 複数行分ループを回す
     // コピー元:開始座標(行) <= コピー元:選択座標(行)
     for (let i = sri; i <= eri; i += 1) {
@@ -153,8 +156,8 @@ class Rows {
               // 複数列分ループを回す
               // コピー先:開始座標 <= コピー先:選択座標
               for (let jj = dsci; jj <= deci; jj += cn) {
-                let nri = 0
-                let nci = 0
+                let nri = 0;
+                let nci = 0;
                 if (what == "rotate-paste") {
                   // 転置して貼り付け
                   nri = ii + (j - sci);
@@ -167,7 +170,60 @@ class Rows {
                 // console.log("jj:", jj, "j:", j, "sci:", sci)
                 // console.log("nri:", nri)
                 // console.log("nci:", nci)
+                // const ncell = helper.cloneDeep(this._[i].cells[j]);
+                // const ncell = JSON.parse(JSON.stringify(helper.cloneDeep(this._[i].cells[j])));
                 const ncell = helper.cloneDeep(this._[i].cells[j]);
+                ncellList.push(ncell);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // ncellListを作成する為のループと同じ条件でループして、ncellListを対象セルへ反映
+    let ncellListIdx = 0;
+    for (let i = sri; i <= eri; i += 1) {
+      // i = 行数分(コピー元)
+      // j = 列数分(コピー元)
+      // ii = 行数分(コピー先)
+      // jj = 列数分(コピー先)
+
+      // コピー元データのセル値(行単位の配列)
+      if (this._[i]) {
+
+        // 配列の数分だけループを回す
+        // コピー元:開始座標(列) <= コピー元:選択座標(列)
+        for (let j = sci; j <= eci; j += 1) {
+
+          // 値チェック
+          if (this._[i].cells && this._[i].cells[j]) {
+
+            // 複数行分ループを回す
+            // コピー先:開始座標(行) <= コピー先:選択座標(行)
+            for (let ii = dsri; ii <= deri; ii += rn) {
+
+              // 複数列分ループを回す
+              // コピー先:開始座標 <= コピー先:選択座標
+              for (let jj = dsci; jj <= deci; jj += cn) {
+                let nri = 0;
+                let nci = 0;
+                if (what == "rotate-paste") {
+                  // 転置して貼り付け
+                  nri = ii + (j - sci);
+                  nci = jj + (i - sri);
+                } else {
+                  nri = ii + (i - sri);
+                  nci = jj + (j - sci);
+                }
+                // console.log("ii:", ii, "i:", i, "sci:", sri)
+                // console.log("jj:", jj, "j:", j, "sci:", sci)
+                // console.log("nri:", nri)
+                // console.log("nci:", nci)
+                // const ncell = helper.cloneDeep(this._[i].cells[j]);
+                const ncell = ncellList[ncellListIdx];
+                ncellListIdx++;
+
                 // ncell.text
                 if (autofill && ncell && ncell.text && ncell.text.length > 0) {
                   const { text } = ncell;
