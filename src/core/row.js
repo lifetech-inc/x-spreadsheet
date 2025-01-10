@@ -181,7 +181,7 @@ class Rows {
       }
     }
 
-    // ncellListを作成する為のループとい同じ条件でループして、ncellListを対象セルへ反映
+    // ncellListを作成する為のループと同じ条件でループして、ncellListを対象セルへ反映
     let ncellListIdx = 0;
     for (let i = sri; i <= eri; i += 1) {
       // i = 行数分(コピー元)
