@@ -70,6 +70,10 @@ s.validate();
       key: "delete-row-insert-end-row",
       title: "選択した行数を削除",
     },
+    {
+      key: "insert-cell-delete-end-cell",
+      title: "セルを追加して既存のセルを下に移動",
+    },
   ],
   view: {
     height: () => document.documentElement.clientHeight,
