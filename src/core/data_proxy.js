@@ -98,6 +98,7 @@ const defaultSettings = {
       title: t("contextmenu.insertRowDeleteEndRow"),
     },
     { key: "insert-column", title: t("contextmenu.insertColumn") },
+    { key: "insert-cell", title: t("contextmenu.insertCell") },
     { key: "divider" },
     { key: "delete-row", title: t("contextmenu.deleteRow") },
     {
@@ -945,7 +946,7 @@ export default class DataProxy {
     });
   }
 
-  // type: row | column
+  // type: row | column | cell
   insert(type, n = 1, deleteNum = 0) {
     this.changeData(() => {
       const { sri, sci } = this.selector.range;
@@ -970,6 +971,12 @@ export default class DataProxy {
               delete cols._[col];
             }
           });
+      } else if (type === "cell") {
+        rows.insertCell(sri, sci, n);
+        if (deleteNum != 0) {
+          // セル挿入処理後、削除する
+          rows.deleteCell_(deleteNum, deleteNum + n - 1, sci);
+        }
       }
       merges.shift(type, si, n, (ri, ci, rn, cn) => {
         const cell = rows.getCell(ri, ci);

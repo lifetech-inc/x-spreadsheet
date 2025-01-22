@@ -312,6 +312,32 @@ class Rows {
     this.len += n;
   }
 
+  insertCell(sri, sci, n = 1) {
+    const ndata = {};
+    this.each((ri, row) => {
+      let nri = parseInt(ri, 10);
+      if (!ndata[nri]) {
+        ndata[nri] = {cells: {}};
+      }
+      const colIdxStrs = Object.keys(row.cells);
+      const colIdxlength = colIdxStrs.length;
+      for (let i = 0; i < colIdxlength; i++) {
+        const colIdxStr = colIdxStrs[i];
+        const colIdx = parseInt(colIdxStr, 10);
+        let adjustRowIdx = 0;
+        if (nri >= sri && colIdx == sci) {
+          adjustRowIdx = n;
+          if (!ndata[nri+adjustRowIdx]) {
+            ndata[nri+adjustRowIdx] = {cells: {}};
+          }
+        }
+        ndata[nri+adjustRowIdx].cells[colIdxStr] = row.cells[colIdxStr];
+      }
+    });
+    this._ = ndata;
+    this.len += n;
+  }
+
   delete(sri, eri) {
     const n = eri - sri + 1;
     const ndata = {};
@@ -326,6 +352,33 @@ class Rows {
             cell.text = cell.text.replace(/[a-zA-Z]{1,3}\d+/g, word => expr2expr(word, 0, -n, (x, y) => y > eri));
           }
         });
+      }
+    });
+    this._ = ndata;
+    this.len -= n;
+  }
+
+  deleteCell_(sri, eri, sci) {
+    const n = eri - sri + 1;
+    const ndata = {};
+    this.each((ri, row) => {
+      const nri = parseInt(ri, 10);
+      if (!ndata[nri]) {
+        ndata[nri] = {cells: {}};
+      }
+      const colIdxStrs = Object.keys(row.cells);
+      const colIdxlength = colIdxStrs.length;
+      for (let i = 0; i < colIdxlength; i++) {
+        const colIdxStr = colIdxStrs[i];
+        const colIdx = parseInt(colIdxStr, 10);
+        let adjustRowIdx = 0;
+        if (ri > eri && colIdx == sci) {
+          adjustRowIdx = n;
+          if (!ndata[nri+adjustRowIdx]) {
+            ndata[nri+adjustRowIdx] = {cells: {}};
+          }
+        }
+        ndata[nri+adjustRowIdx].cells[colIdxStr] = row.cells[colIdxStr];
       }
     });
     this._ = ndata;

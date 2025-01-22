@@ -520,6 +520,10 @@ function insertDeleteRowColumn(type) {
     // 行を追加した後、行末端を削除
     let insertCount = selector.range.eri - selector.range.sri + 1;
     data.insert("row", insertCount, data.rows.len);
+  } else if (type === "insert-cell-delete-end-cell") {
+    // セルを追加した後、行末端セルを削除
+    let insertCount = selector.range.eri - selector.range.sri + 1;
+    data.insert("cell", insertCount, data.rows.len);
   } else if (type === "delete-row") {
     data.delete("row");
   } else if (type === "delete-row-insert-end-row") {
