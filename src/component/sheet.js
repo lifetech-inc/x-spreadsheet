@@ -310,7 +310,7 @@ function cut() {
 function paste(what, evt) {
   const { data } = this;
   if (data.settings.mode === "read") return;
-  if (data.clipboard.isClear()) {
+  if (data.clipboard.isClear() || data.clipboard.isCopy()) {
     const resetSheet = () => sheetReset.call(this);
     const eventTrigger = (rows) => {
       this.trigger("pasted-clipboard", rows);
