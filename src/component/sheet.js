@@ -300,17 +300,26 @@ function copy(evt) {
   selector.showClipboard();
 }
 
-function cut() {
+function cut(evt) {
   const { data, selector } = this;
   if (data.settings.mode === "read") return;
   data.cut();
+  data.copyToSystemClipboard(evt);
+  this.reservedSelector = JSON.parse(JSON.stringify(selector));
   selector.showClipboard();
 }
 
 function paste(what, evt) {
   const { data } = this;
   if (data.settings.mode === "read") return;
-  if (data.clipboard.isClear() || data.clipboard.isCopy()) {
+  if (
+    data.clipboard.isClear() ||
+    data.clipboard.isCopy() ||
+    data.clipboard.isCut()
+  ) {
+    if (data.clipboard.isCut()) {
+      data.deleteCell("text", this.reservedSelector);
+    }
     const resetSheet = () => sheetReset.call(this);
     const eventTrigger = (rows) => {
       this.trigger("pasted-clipboard", rows);
@@ -931,6 +940,7 @@ export default class Sheet {
     this.overlayerEl = h("div", `${cssPrefix}-overlayer`).child(
       this.overlayerCEl
     );
+    this.reservedSelector = {};
     // sortFilter
     this.sortFilter = new SortFilter();
     // root element
