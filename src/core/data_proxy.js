@@ -936,14 +936,46 @@ export default class DataProxy {
     });
   }
 
-  deleteCell(what = "all") {
+  deleteCell(what = "all", paramSelector = null) {
     const { selector } = this;
+    const rangeBk = {
+      isReserved: false,
+      sri: 0,
+      sci: 0,
+      eri: 0,
+      eci: 0,
+      w: 0,
+      h: 0,
+    };
+    if (paramSelector && paramSelector.range) {
+      rangeBk.isReserved = true;
+      rangeBk.sri = selector.range.sri;
+      rangeBk.sci = selector.range.sci;
+      rangeBk.eri = selector.range.eri;
+      rangeBk.eci = selector.range.eci;
+      rangeBk.w = selector.range.w;
+      rangeBk.h = selector.range.h;
+      selector.range.sri = paramSelector.range.sri;
+      selector.range.sci = paramSelector.range.sci;
+      selector.range.eri = paramSelector.range.eri;
+      selector.range.eci = paramSelector.range.eci;
+      selector.range.w = paramSelector.range.w;
+      selector.range.h = paramSelector.range.h;
+    }
     this.changeData(() => {
       this.rows.deleteCells(selector.range, what);
       if (what === "all" || what === "format") {
         this.merges.deleteWithin(selector.range);
       }
     });
+    if (rangeBk.isReserved) {
+      selector.range.sri = rangeBk.sri;
+      selector.range.sci = rangeBk.sci;
+      selector.range.eri = rangeBk.eri;
+      selector.range.eci = rangeBk.eci;
+      selector.range.w = rangeBk.w;
+      selector.range.h = rangeBk.h;
+    }
   }
 
   // type: row | column | cell
